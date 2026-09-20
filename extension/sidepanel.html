@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Flubber</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+<main class="flubber" id="flubber" data-state="idle" aria-busy="true">
+  <header class="panel-header">
+    <a class="brand" href="#" aria-label="Flubber home"><img src="assets/mascot.png" alt="" width="32" height="32"><span>Flubber</span></a>
+    <div class="header-buttons"><button class="icon-button connect-button" id="connect-button" type="button" aria-label="Connect Flubber"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3v5m8-5v5M6 8h12v3a6 6 0 0 1-12 0V8zm6 9v4"/></svg><span id="connection-dot" class="connection-indicator" aria-hidden="true"></span></button><button class="icon-button" id="close-panel" type="button" aria-label="Close panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button></div>
+  </header>
+  <nav class="tabs" role="tablist" aria-label="Flubber views">
+    <button type="button" class="tab active" id="task-tab" role="tab" aria-selected="true" aria-controls="task-view">Task</button>
+    <button type="button" class="tab" id="history-tab" role="tab" aria-selected="false" aria-controls="history-view" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11a9 9 0 1 1 2.2 6M3 4v7h7m2-4v5l3 2"/></svg>History</button>
+  </nav>
+  <section id="task-view" class="task-view" role="tabpanel" aria-labelledby="task-tab">
+    <div class="page-context"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18m-13-3h.01M8 6h.01"/></svg><span id="page-title">This browser tab</span><span class="context-dot" aria-hidden="true"></span></div>
+    <section class="voice-section" aria-label="Voice input">
+      <p class="eyebrow">A LITTLE HELP, ONE CLICK AWAY</p>
+      <h1 id="voice-title">What can I do<br>for you?</h1>
+      <p id="voice-subtitle" class="voice-subtitle">Tap the mic and say what you’d like done on this page.</p>
+      <div class="mic-stage">
+        <div class="mic-halo" aria-hidden="true"></div>
+        <button class="mic-button" id="mic-button" type="button" aria-label="Start speaking" aria-pressed="false" aria-describedby="mic-caption" disabled><svg class="mic-icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="11" y="3" width="10" height="17" rx="5"/><path d="M7 14v2a9 9 0 0 0 18 0v-2M16 25v5m-5 0h10"/></svg><span class="waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></button>
+      </div>
+      <p class="mic-caption" id="mic-caption">Tap to talk</p>
+      <p class="voice-message" id="voice-message" aria-live="polite"></p>
+    </section>
+    <form id="task-form" class="composer">
+      <div class="composer-label"><label for="task-input" id="composer-label">Or type a task</label><span id="composer-hint">Plain English works.</span></div>
+      <div class="input-shell"><textarea id="task-input" rows="3" maxlength="6000" placeholder="Cancel my subscription on this site..." aria-describedby="input-help" disabled></textarea><div class="input-bottom"><span id="input-help">Enter to send · Shift + Enter for a new line</span><button type="submit" id="send-button" class="send-button" aria-label="Start task" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-5 5 5-5 5 5"/></svg></button></div></div>
+    </form>
+    <section class="task-status" id="task-status" aria-label="Task progress" aria-live="polite">
+      <div class="status-top"><div class="status-identity"><img src="assets/mascot.png" alt="" width="30" height="30"><div><h2 id="status-title">Ready when you are</h2><p id="status-detail">Your next task starts here.</p></div></div><button type="button" id="stop-button" class="stop-button" hidden>Stop</button></div>
+      <div class="progress-track" id="progress" role="progressbar" aria-label="Task progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
+      <ol id="task-steps" class="task-steps" hidden></ol>
+      <p id="task-result" class="task-result" hidden></p>
+      <p id="last-update" class="last-update" hidden></p>
+      <button type="button" id="new-task" class="text-button" hidden>Start another task <span aria-hidden="true">↗</span></button>
+    </section>
+    <footer class="preview-note" id="connection-status">Connect Flubber to start browser tasks.</footer>
+  </section>
+  <section id="history-view" class="history-view" role="tabpanel" aria-labelledby="history-tab" hidden>
+    <div class="history-heading"><h1>Your history</h1><p>A little less on your to-do list.</p></div>
+    <div id="history-list"></div>
+    <footer class="history-footer">Saved on this device.</footer>
+  </section>
+  <p id="panel-error" class="panel-error" role="alert" hidden></p>
+</main>
+<dialog id="connection-dialog" class="connection-dialog" aria-labelledby="connection-title">
+  <div class="dialog-heading"><h2 id="connection-title">Connect Flubber</h2><button type="button" class="icon-button" id="close-connection" aria-label="Close connection dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button></div>
+  <p>Start the companion on your computer, then paste the pairing code it prints.</p>
+  <form id="connection-form">
+    <label for="pairing-code">Pairing code</label>
+    <input id="pairing-code" type="password" autocomplete="off" spellcheck="false" maxlength="128" placeholder="Code from the companion terminal" required>
+    <p id="pairing-error" class="pairing-error" role="alert" hidden></p>
+    <button id="connect-submit" class="primary-button" type="submit">Connect</button>
+  </form>
+  <p class="connection-footnote">Your OpenAI API key stays in the companion, outside the extension.</p>
+</dialog>
+<script src="state.js"></script>
+<script src="sidepanel.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Flubber · Microphone</title>
+  <link rel="stylesheet" href="sidepanel.css">
+  <style>
+    body{display:grid;place-items:center;min-height:100vh}
+    .permission{max-width:420px;padding:32px 24px;text-align:center}
+    .permission img{width:72px;height:72px;object-fit:contain}
+    .permission h1{font-size:26px;letter-spacing:-.8px;font-weight:600;margin:18px 0 10px}
+    .permission p{color:var(--muted);font-size:14px;line-height:1.6;margin:0}
+    .permission .primary-button{max-width:240px;margin-top:22px}
+  </style>
+</head>
+<body>
+<main class="permission">
+  <img src="assets/mascot.png" alt="">
+  <h1 id="title">Let Flubber hear you</h1>
+  <p id="detail">Chrome asks for microphone access once. Flubber only listens while the mic button is on.</p>
+  <button id="allow" class="primary-button" type="button">Allow microphone</button>
+</main>
+<script src="permission.js"></script>
+</body>
+</html>

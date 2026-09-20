@@ -1,0 +1,9 @@
+# Your API key and local data never get committed
+companion/.env
+companion/.flubber/
+companion/.venv/
+
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
